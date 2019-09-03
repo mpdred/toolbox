@@ -5,7 +5,7 @@ ENV HOME=/home/user
 ENV AWS_SHARED_CREDENTIALS_FILE=$HOME/.aws/credentials
 ENV AWS_CONFIG_FILE=$HOME/.aws/config
 
-ARG TERRAFORM_VERSION=0.12.6
+ARG TERRAFORM_VERSION=0.12.7
 
 RUN apt update 1>/dev/null && apt upgrade -y 1>/dev/null
 
@@ -18,26 +18,25 @@ RUN apt install -y \
         tmux tree vim watch \
         1>/dev/null
 
-COPY .bashrc $HOME/.bashrc
-RUN echo ". /etc/profile.d/bash_completion.sh" >> $HOME/.bashrc
+RUN echo ". /etc/profile.d/bash_completion.sh" >> /etc/skel/.bashrc
 
 # AWS cli
 RUN pip3 install --quiet --upgrade pip \
     && pip3 install --quiet awscli \
-    && echo "complete -C `which aws_completer` aws" >> $HOME/.bashrc \
+    && echo "complete -C `which aws_completer` aws" >> /etc/skel/.bashrc \
     && aws --version
 
 # Eksctl
 RUN curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp \
     && mv /tmp/eksctl /usr/local/bin \
-    && echo "source <(eksctl completion bash)" >> $HOME/.bashrc \
+    && echo "source <(eksctl completion bash)" >> /etc/skel/.bashrc \
     && eksctl version
 
 # Helm
 RUN curl --silent -LO https://git.io/get_helm.sh \
     && chmod 700 get_helm.sh \
     && ./get_helm.sh \
-    && echo "source <(helm completion bash)" >> $HOME/.bashrc \
+    && echo "source <(helm completion bash)" >> /etc/skel/.bashrc \
     && helm version --client
 
 # Kubectl
@@ -46,7 +45,7 @@ RUN curl --silent -LO \
         -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl \
     && chmod +x ./kubectl \
     && mv ./kubectl /usr/local/bin/kubectl \
-    && echo "source <(kubectl completion bash)" >> $HOME/.bashrc \
+    && echo "source <(kubectl completion bash)" >> /etc/skel/.bashrc \
     && kubectl version --client
 
 # Terraform
