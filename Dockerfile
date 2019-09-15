@@ -5,7 +5,7 @@ ENV HOME=/home/user
 ENV AWS_SHARED_CREDENTIALS_FILE=$HOME/.aws/credentials
 ENV AWS_CONFIG_FILE=$HOME/.aws/config
 
-ARG TERRAFORM_VERSION=0.12.7
+ARG TERRAFORM_VERSION=0.12.8
 
 RUN apt update 1>/dev/null && apt upgrade -y 1>/dev/null
 
