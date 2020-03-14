@@ -1,17 +1,25 @@
+# toolbox ![build](https://img.shields.io/docker/cloud/build/mpdred/toolbox) ![tag](https://img.shields.io/github/v/release/mpdred/toolbox?include_prereleases)
 ## tools
-- awscli
-- eksctl
-- helm
+- awscli-v2
+- helm-v3
 - kubectl
-- terraform
+- terraform-v0.12
 
 ## run container
 ```bash
-docker run -ti \
-    -v /etc/passwd:/etc/passwd -u \`id -u\`:\`id -g\` \
-    -v \$HOME/.aws/:$HOME/.aws/ \
-    -v \$HOME/.ssh/:$HOME/.ssh/ \
-    -v \$HOME/dev/:/home/user/dev/ \
-    -w /home/user/dev/ \
-    -p 8000:8000 g78ffkud/tools
+docker run \
+    --tty \
+    --interactive \
+    --volume /etc/passwd:/etc/passwd \
+    --volume /etc/shadow:/etc/shadow \
+    --volume /etc/group:/etc/group \
+    --volume /etc/sudoers:/etc/sudoers \
+    --volume $HOME/.aws/:/home/user/.aws/ \
+    --volume $HOME/.gitconfig:/home/user/.gitconfig \
+    --volume $HOME/.kube/:/home/user/.kube/ \
+    --volume $HOME/.ssh/:/home/user/.ssh/ \
+    --volume $HOME/src/:/home/user/src/ \
+    --workdir /home/user/src/ \
+    --user `id --user`:`id --group` \
+    mpdred/toolbox
 ```
