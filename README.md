@@ -1,4 +1,4 @@
-# toolbox ![build](https://img.shields.io/docker/cloud/build/mpdred/toolbox) ![tag](https://img.shields.io/github/v/release/mpdred/toolbox?include_prereleases)
+# toolbox ![build](https://img.shields.io/docker/cloud/build/mpdred/toolbox) ![tag](https://img.shields.io/github/v/tag/mpdred/toolbox)
 ## tools
 - awscli-v2
 - helm-v3
